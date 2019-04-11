@@ -31,7 +31,11 @@ def put_item():
     IrohaCrypto.sign_query(query, admin_private_key)
     response = net.send_query(query)
     data = response.account_detail_response
-    all_items = json.loads(str(data)[9:-2].replace("\\", ""))[admin_account]
+    all_items={}
+    try:
+        all_items = json.loads(str(data)[9:-2].replace("\\", ""))[admin_account]
+    except:
+        pass
     if item in all_items.keys():
         abort(409, 'Item is already insured')
     commands = [
